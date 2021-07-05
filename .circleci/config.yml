@@ -95,7 +95,7 @@ worflows:
   build and deploy:
     jobs:
       - build
-      - deploy-to-aws-s3:  
+      - deploy-to-aws-s3
           requires:
             - build 
           filters:
@@ -104,7 +104,7 @@ worflows:
                 - develop
                 - staging
                 - master  
-      - deploy-to-aws-cloudfront:  
+      - deploy-to-aws-cloudfront 
           requires:
             - deploy-to-aws-s3 
           filters:
