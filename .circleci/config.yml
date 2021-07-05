@@ -50,7 +50,7 @@ jobs:
           command: | 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then    
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_PRODUCTION} --delete
-            elif [ "${CIRCLE_BRANCH}" == "stagin" ]; then
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]; then
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_STAGING} --delete
             else
               aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_DEV} --delete
@@ -82,10 +82,10 @@ jobs:
       - run:
           name: Deploy to AWS Cloudfront
           command: | 
-            aws configure set preview.cloudfront
+            aws configure set preview.cloudfront true
             if [ "${CIRCLE_BRANCH}" == "master" ]; then    
               aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID_PRODUCTION} --paths /\*
-            elif [ "${CIRCLE_BRANCH}" == "stagin" ]; then
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]; then
               aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID_STAGING} --paths /\*              
             else
               aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID_DEV} --paths /\*             
