@@ -66,6 +66,7 @@ aliases:
         fi
 
 jobs:
+
   build:
     executor: app-executor
     steps:
@@ -74,6 +75,7 @@ jobs:
       - *restore-cache
       - *install-dependencies
       - *save-cache
+
   linting:
     executor: app-executor
     steps:
@@ -81,8 +83,9 @@ jobs:
       - *show-current-branch-name
       - *restore-cache
       - run: 
-        name: run eslint
-        command:  npm run lint
+          name: Run eslint
+          command: npm run lint
+
   deploy-to-aws-s3:
     executor: app-executor
     steps:
@@ -91,6 +94,7 @@ jobs:
       - *install-awscli
       - *build-project
       - *deploy-to-s3
+
   deploy-to-aws-cloudfront:
     executor: app-executor
     steps:
